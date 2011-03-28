@@ -1,0 +1,22 @@
+<RCC>
+    <qresource prefix="/">
+        <file>default.ini</file>
+        <file>glsl/bf_fs.glsl</file>
+        <file>glsl/color_quantization_fs.glsl</file>
+        <file>glsl/dog_fs.glsl</file>
+        <file>glsl/fdog0_fs.glsl</file>
+        <file>glsl/fdog1_fs.glsl</file>
+        <file>glsl/gauss3x3_fs.glsl</file>
+        <file>glsl/gauss5x5_fs.glsl</file>
+        <file>glsl/gauss_fs.glsl</file>
+        <file>glsl/lab2rgb_fs.glsl</file>
+        <file>glsl/lic_fs.glsl</file>
+        <file>glsl/overlay_fs.glsl</file>
+        <file>glsl/rgb2lab_fs.glsl</file>
+        <file>glsl/sst_fs.glsl</file>
+        <file>glsl/tfm_fs.glsl</file>
+        <file>glsl/mix_fs.glsl</file>
+        <file>hpi_logo.png</file>
+        <file>test_512x512.png</file>
+    </qresource>
+</RCC>
