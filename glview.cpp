@@ -14,6 +14,11 @@
 // GNU General Public License for more details.
 // 
 #include "glview.h"
+#ifdef __APPLE__
+#include <OpenGL/glu.h>
+#else
+#include <GL/glu.h>
+#endif
 
 
 GLView::GLView(QWidget *parent) : ImageView(parent) {

@@ -20,11 +20,11 @@
 #ifdef Q_WS_X11
 #include <QtGui>
 #include "GLee.h"
-#include <QtOpenGL>
+#include <QtOpenGL/QGLWidget>
 #else
 #include "GLee.h"
 #include <QtGui>
-#include <QtOpenGL>
+#include <QtOpenGL/QGLWidget>
 #endif
 
 #ifdef min
