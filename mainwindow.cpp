@@ -229,6 +229,7 @@ void MainWindow::do_update() {
     ui.glw->fdog_sigma_m = ui.fdog_sigma_m->value();
     ui.glw->fdog_tau = ui.fdog_tau->value();
     ui.glw->fdog_phi = ui.fdog_phi->value();
+    ui.glw->fdog_eps = ui.fdog_eps->value();
     ui.glw->fdog_color[0] = m_fdog_color.redF();
     ui.glw->fdog_color[1] = m_fdog_color.greenF();
     ui.glw->fdog_color[2] = m_fdog_color.blueF();

@@ -42,14 +42,14 @@ void GLView::initializeGL() {
     #endif
 
     if (!GLEE_VERSION_2_0 ||
-		!GLEE_EXT_framebuffer_object ||
-		!GLEE_ARB_texture_float ||
-		!GLEE_ARB_texture_rectangle ||
-		!GLEE_EXT_bgra) {
-		QMessageBox::critical(this, "Error", "OpenGL 2.0 Graphics Card with EXT_framebuffer_object, ARB_texture_rectangle, ARB_texture_float and EXT_bgra required");
-	}
-	
-	bool status = true;
+        !GLEE_EXT_framebuffer_object ||
+        !GLEE_ARB_texture_float ||
+        !GLEE_ARB_texture_rectangle ||
+        !GLEE_EXT_bgra) {
+        QMessageBox::critical(this, "Error", "OpenGL 2.0 Graphics Card with EXT_framebuffer_object, ARB_texture_rectangle, ARB_texture_float and EXT_bgra required");
+    }
+    
+    bool status = true;
     QDir glsl_dir(":/glsl");
     QFileInfoList glsl_list = glsl_dir.entryInfoList();
     for (int i = 0; i < glsl_list.size(); ++i) {
@@ -58,7 +58,7 @@ void GLView::initializeGL() {
         QFile f(fi.filePath());
         if (!f.open(QIODevice::ReadOnly | QIODevice::Text)) {
             QMessageBox::critical(NULL, "Error", QString("Can't open %1").arg(fi.filePath()));
-			exit(1);
+            exit(1);
         }
 
         #ifdef WIN32
@@ -137,10 +137,10 @@ bool GLView::open(const QString& fileName) {
     m_image = QImage(fileName);
     #ifdef HAVE_QUICKTIME
     if (m_image.isNull() && m_haveQuickTime) {
-	    std::string pathStd = fileName.toStdString();
-	    #ifdef Q_OS_WIN
-	    for (std::string::iterator p = pathStd.begin(); p != pathStd.end(); ++p) if (*p == '/') *p = '\\';
-	    #endif
+        std::string pathStd = fileName.toStdString();
+        #ifdef Q_OS_WIN
+        for (std::string::iterator p = pathStd.begin(); p != pathStd.end(); ++p) if (*p == '/') *p = '\\';
+        #endif
         m_player = quicktime_player::open(pathStd.c_str());
         if (m_player) {
             m_image = QImage((uchar*)m_player->get_buffer(), m_player->get_width(), m_player->get_height(), QImage::Format_RGB32);
@@ -150,7 +150,7 @@ bool GLView::open(const QString& fileName) {
     } else
     #endif
     {
-    	m_image = m_image.convertToFormat(QImage::Format_RGB32);
+        m_image = m_image.convertToFormat(QImage::Format_RGB32);
     }
 
     if (!m_image.isNull()) {
@@ -195,27 +195,27 @@ bool GLView::open(const QString& fileName) {
         }
         makeCurrent();
         m_noise = texture_2d(GL_LUMINANCE16F_ARB, w, h, GL_LUMINANCE, GL_FLOAT, noise);
-		assert(glGetError() == GL_NO_ERROR);
-		delete[] noise;
+        assert(glGetError() == GL_NO_ERROR);
+        delete[] noise;
     } else {
         QMessageBox::critical(this, "Error", QString(
-			"QuickTime can't load '%1'. To get further information "\
-			"please try load the file with the QuickTime player.").arg(fileName));
+            "QuickTime can't load '%1'. To get further information "\
+            "please try load the file with the QuickTime player.").arg(fileName));
     }
 
-	playerChanged();
-	setOrigin(QPoint(0,0));
-	setZoom(1.0);
-	updateAll();
-	this->fileName = fileName;
+    playerChanged();
+    setOrigin(QPoint(0,0));
+    setZoom(1.0);
+    updateAll();
+    this->fileName = fileName;
 
-	return !m_image.isNull();
+    return !m_image.isNull();
 }
 
 
 bool GLView::save(const QString& fileName) {
-	if (!m_dst.is_valid()) return false;
-	makeCurrent();
+    if (!m_dst.is_valid()) return false;
+    makeCurrent();
 
     GLint oldReadBuffer;    
     glGetIntegerv(GL_READ_BUFFER, &oldReadBuffer);
@@ -225,66 +225,66 @@ bool GLView::save(const QString& fileName) {
 
     QImage img(m_dst.get_width(), m_dst.get_height(), QImage::Format_RGB32);
     glReadPixels(0,0, m_dst.get_width(), m_dst.get_height(), GL_BGRA_EXT, GL_UNSIGNED_BYTE, img.bits());
-	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
-	glReadBuffer(oldReadBuffer);
+    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+    glReadBuffer(oldReadBuffer);
 
-	if (!img.save(fileName)) {
-		QMessageBox::critical(this, "Error", "Saving image failed!");
-		return false;
-	}
-	return true;
+    if (!img.save(fileName)) {
+        QMessageBox::critical(this, "Error", "Saving image failed!");
+        return false;
+    }
+    return true;
 }
 
 
 #ifdef HAVE_QUICKTIME
 bool GLView::record( const QString& fileName ) {
-	if (!m_player) return false;
-	
-	QString fn(fileName);
-	fn.replace('/','\\');
+    if (!m_player) return false;
+    
+    QString fn(fileName);
+    fn.replace('/','\\');
 
     quicktime_recorder *recorder = quicktime_recorder::create(fn.toLatin1(), 
         m_player->get_width(), m_player->get_height(), m_player->get_fps());
     if (!recorder) {
-		QMessageBox::critical(this, "Error", "Creation of QuickTime recorder failed!");
-		return false;
-	}
+        QMessageBox::critical(this, "Error", "Creation of QuickTime recorder failed!");
+        return false;
+    }
 
-	parentWidget()->setEnabled(false);
+    parentWidget()->setEnabled(false);
 
-	QProgressDialog progress("Recording...", "Abort", 0, m_player->get_duration(), this);
-	progress.setWindowModality(Qt::WindowModal);
+    QProgressDialog progress("Recording...", "Abort", 0, m_player->get_duration(), this);
+    progress.setWindowModality(Qt::WindowModal);
 
-	makeCurrent();
+    makeCurrent();
 
-	int nextTime = 0;
-	while (nextTime >= 0) {
-		progress.setValue(nextTime);
-		m_player->set_time(nextTime);
-		m_player->update();
+    int nextTime = 0;
+    while (nextTime >= 0) {
+        progress.setValue(nextTime);
+        m_player->set_time(nextTime);
+        m_player->update();
 
-		updateAll();
-		glFinish();
+        updateAll();
+        glFinish();
 
-		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, m_fbo);
-		glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, m_dst.get_id(), 0);
-		glReadBuffer(GL_COLOR_ATTACHMENT0_EXT);
-		glReadPixels(0,0, m_dst.get_width(), m_dst.get_height(), GL_BGRA_EXT, GL_UNSIGNED_BYTE, recorder->get_buffer());
-		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
-		recorder->append_frame();
+        glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, m_fbo);
+        glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, m_dst.get_id(), 0);
+        glReadBuffer(GL_COLOR_ATTACHMENT0_EXT);
+        glReadPixels(0,0, m_dst.get_width(), m_dst.get_height(), GL_BGRA_EXT, GL_UNSIGNED_BYTE, recorder->get_buffer());
+        glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+        recorder->append_frame();
 
-		nextTime = m_player->get_next_time(nextTime);
+        nextTime = m_player->get_next_time(nextTime);
 
-		if (progress.wasCanceled())
-			break;
-	}
+        if (progress.wasCanceled())
+            break;
+    }
 
-	recorder->finish();
-	delete recorder;
+    recorder->finish();
+    delete recorder;
 
-	parentWidget()->setEnabled(true);
-	playerChanged();
-	return true;
+    parentWidget()->setEnabled(true);
+    playerChanged();
+    return true;
 }
 #endif
 
@@ -409,7 +409,8 @@ texture_2d fdog_filter(const texture_2d& src,
                        float sigma_r,
                        float tau,
                        float sigma_m,
-                       float phi) 
+                       float phi,
+                       float epsilon) 
 {
     texture_2d tmp(src.clone_format());
     texture_2d dst(src.clone_format());
@@ -432,6 +433,7 @@ texture_2d fdog_filter(const texture_2d& src,
         fdog1.bind_sampler("tfm", tfm, GL_NEAREST);
         fdog1.set_uniform_1f("sigma_m", sigma_m);
         fdog1.set_uniform_1f("phi", phi);
+        fdog1.set_uniform_1f("epsilon", epsilon);
         fdog1.set_uniform_2f("img_size", (float)src.get_width(), (float)src.get_height());
         fdog0.draw(&dst);
     }
@@ -440,28 +442,30 @@ texture_2d fdog_filter(const texture_2d& src,
 
 
 texture_2d dog_filter(const texture_2d& src, 
-					   int n,
-					   float sigma_e,
-					   float sigma_r,
-					   float tau,
-					   float phi) 
+                       int n,
+                       float sigma_e,
+                       float sigma_r,
+                       float tau,
+                       float phi,
+                       float epsilon) 
 {
-	texture_2d tmp(src.clone_format());
-	//texture_2d dst(src.clone_format());
+    texture_2d tmp(src.clone_format());
+    //texture_2d dst(src.clone_format());
 
-	for (int i = 0; i < n; ++i) {
-		texture_2d img = (i == 0)? src : overlay(tmp, src);
-		glsl_program dog("dog_fs.glsl");
-		dog.use();
-		dog.bind_sampler("img", img, GL_NEAREST);
-		dog.set_uniform_1f("sigma_e", sigma_e);
-		dog.set_uniform_1f("sigma_r", sigma_r);
-		dog.set_uniform_1f("tau", tau);
-		dog.set_uniform_1f("phi", phi);
-		dog.set_uniform_2f("img_size", (float)src.get_width(), (float)src.get_height());
-		dog.draw(&tmp);
-	}
-	return tmp;
+    for (int i = 0; i < n; ++i) {
+        texture_2d img = (i == 0)? src : overlay(tmp, src);
+        glsl_program dog("dog_fs.glsl");
+        dog.use();
+        dog.bind_sampler("img", img, GL_NEAREST);
+        dog.set_uniform_1f("sigma_e", sigma_e);
+        dog.set_uniform_1f("sigma_r", sigma_r);
+        dog.set_uniform_1f("tau", tau);
+        dog.set_uniform_1f("phi", phi);
+        dog.set_uniform_1f("epsilon", epsilon);
+        dog.set_uniform_2f("img_size", (float)src.get_width(), (float)src.get_height());
+        dog.draw(&tmp);
+    }
+    return tmp;
 }
 
 
@@ -559,13 +563,13 @@ texture_2d smooth_filter(const texture_2d& tfm,
 
 void GLView::process() {
     makeCurrent();
-	if (m_image.isNull()) {
-		m_dst = texture_2d();
-		return;
-	}
+    if (m_image.isNull()) {
+        m_dst = texture_2d();
+        return;
+    }
 
-	int w = m_image.width();
-	int h = m_image.height();
+    int w = m_image.width();
+    int h = m_image.height();
 
     glViewport(0, 0, w, h);
     glMatrixMode(GL_PROJECTION);
@@ -582,8 +586,8 @@ void GLView::process() {
     texture_2d bfe = (bf_ne > 0)? orientation_aligned_bilateral_filter(lab, tfm, bf_ne, bf_sigma_d, bf_sigma_r) : lab;
     texture_2d bfa = (bf_na > 0)? orientation_aligned_bilateral_filter(lab, tfm, bf_na, bf_sigma_d, bf_sigma_r) : lab;
     texture_2d edges = (fdog_type == 0)?
-    fdog_filter(bfe, tfm, fdog_n, fdog_sigma_e, fdog_sigma_r, fdog_tau, fdog_sigma_m, fdog_phi) :
-    dog_filter(bfe, fdog_n, fdog_sigma_e, fdog_sigma_r, fdog_tau, fdog_phi);
+        fdog_filter(bfe, tfm, fdog_n, fdog_sigma_e, fdog_sigma_r, fdog_tau, fdog_sigma_m, fdog_phi, fdog_eps) :
+        dog_filter(bfe, fdog_n, fdog_sigma_e, fdog_sigma_r, fdog_tau, fdog_phi, fdog_eps);
     texture_2d cq = color_quantization(bfa, cq_nbins, cq_phi_q, cq_filter);
     texture_2d cq_rgb = lab2rgb(cq);
     texture_2d ov = mix_filter(edges, cq_rgb, fdog_color);
@@ -593,9 +597,9 @@ void GLView::process() {
         case 0:
             m_dst = result;
             break;
-		case 1:
-			m_dst = src;
-			break;
+        case 1:
+            m_dst = src;
+            break;
         case 2:
             m_dst = lic_filter(tfm, m_noise, 5.0);
             break;
@@ -620,6 +624,6 @@ void GLView::process() {
 
 
 void GLView::updateAll() {
-	process();
-	updateGL();
+    process();
+    updateGL();
 }
