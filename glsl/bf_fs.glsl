@@ -11,7 +11,7 @@ void main (void) {
     float twoSigmaR2 = 2.0 * sigma_r * sigma_r;
     vec2 uv = gl_FragCoord.xy / img_size;
 
-    vec2 t = texture2D(tfm, uv).xy;
+    vec2 t = (texture2D(tfm, uv).xy - 0.5) * 2.0;
     vec2 dir = (pass == 0)? vec2(t.y, -t.x) : t;
     vec2 dabs = abs(dir);
     float ds = 1.0 / ((dabs.x > dabs.y)? dabs.x : dabs.y);

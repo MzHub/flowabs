@@ -576,7 +576,7 @@ void GLView::process() {
     glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, m_fbo);
     glPushAttrib(GL_TEXTURE_BIT);
 
-    texture_2d src(GL_RGB16F_ARB, m_image.width(), m_image.height(), GL_BGRA, GL_UNSIGNED_BYTE, m_image.bits());
+    texture_2d src(GL_RGB, m_image.width(), m_image.height(), GL_BGRA, GL_UNSIGNED_BYTE, m_image.bits());
     texture_2d lab = rgb2lab(src);
     texture_2d tfm = tangent_flow_map(src, sst_sigma);
     texture_2d bfe = (bf_ne > 0)? orientation_aligned_bilateral_filter(lab, tfm, bf_ne, bf_sigma_d, bf_sigma_r) : lab;

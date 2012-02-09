@@ -4,14 +4,17 @@ uniform vec2 img_size;
 
 void main (void) {
     vec2 uv = gl_FragCoord.xy / img_size;
-    vec3 g = texture2D(img, uv).xyz;
+    vec3 st = texture2D(img, uv).xyz;
+    st = (st - 0.5) * 2.0;
+    st = sign(st)*st*st;
 
+    vec3 g = st;
     float lambda1 = 0.5 * (g.y + g.x + 
               sqrt(g.y*g.y - 2.0*g.x*g.y + g.x*g.x + 4.0*g.z*g.z));
     vec2 v = vec2(g.x - lambda1, g.z);
 
     gl_FragColor = (length(v) > 0.0)? 
-        vec4(normalize(v), sqrt(lambda1), 1.0) : 
+        vec4(normalize(v)*0.5+0.5, sqrt(lambda1), 1.0) :
         vec4(0.0, 1.0, 0.0, 1.0);
 
     //v = normalize(v);

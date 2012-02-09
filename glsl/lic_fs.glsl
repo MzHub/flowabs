@@ -12,7 +12,7 @@ struct lic_t {
 };
 
 void step(inout lic_t s) {
-    vec2 t = texture2D(tfm, s.p).xy;
+    vec2 t = (texture2D(tfm, s.p).xy - 0.5) * 2.0;
     if (dot(t, s.t) < 0.0) t = -t;
     s.t = t;
 
@@ -34,7 +34,8 @@ void main (void) {
 
     lic_t a, b;
     a.p = b.p = uv;
-    a.t = texture2D( tfm, uv ).xy / img_size;
+    a.t = (texture2D( tfm, uv ).xy - 0.5) * 2.0;
+    a.t /= img_size;
     b.t = -a.t;
     a.w = b.w = 0.0;
 

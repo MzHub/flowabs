@@ -11,7 +11,7 @@ void main() {
     float twoSigmaRSquared = 2.0 * sigma_r * sigma_r;
     vec2 uv = gl_FragCoord.xy / img_size;
 
-    vec2 t = texture2D(tfm, uv).xy;
+    vec2 t = (texture2D(tfm, uv).xy - 0.5) * 2.0;
     vec2 n = vec2(t.y, -t.x);
     vec2 nabs = abs(n);
     float ds = 1.0 / ((nabs.x > nabs.y)? nabs.x : nabs.y);
@@ -33,6 +33,6 @@ void main() {
     }
     sum /= norm;
 
-    float diff = 100.0 * (sum.x - tau * sum.y);
+    float diff = 0.5 + 100.0 * (sum.x - tau * sum.y);
     gl_FragColor = vec4(vec3(diff), 1.0);
 }

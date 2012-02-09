@@ -1,3 +1,4 @@
+#extension GL_EXT_gpu_shader4 : enable
 // by Jan Eric Kyprianidis <www.kyprianidis.com>
 uniform sampler2D img;
 uniform vec2 img_size;
@@ -26,8 +27,9 @@ void main (void) {
              +1.0 * texture2D(img, uv + vec2( d.x,  d.y))
              ) / 4.0;
 
-    gl_FragColor = vec4(vec3(dot(u.xyz, u.xyz), 
-                             dot(v.xyz, v.xyz), 
-                             dot(u.xyz, v.xyz)), 1.0);
+    vec3 st = vec3(dot(u.xyz, u.xyz), dot(v.xyz, v.xyz), dot(u.xyz, v.xyz)) / 3.0;
+    st = sign(st)*sqrt(abs(st));
+    st = 0.5 + st * 0.5;
+    gl_FragColor = vec4(st, 1.0);
 }
 
