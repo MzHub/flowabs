@@ -34,34 +34,35 @@ public:
     bool open(const QString& fileName);
     bool save(const QString& fileName);
 
-	void process();
+    void process();
     void updateAll();
 
     #ifdef HAVE_QUICKTIME
     bool record(const QString& fileName);
     bool m_haveQuickTime;
-	quicktime_player *m_player;
+    quicktime_player *m_player;
     #endif
     QImage m_image;
     GLuint  m_fbo;
     texture_2d m_dst;
     texture_2d m_noise;
 
-	QString fileName;
+    QString fileName;
     int	    preview;
     float   sst_sigma;      
     int     bf_ne;          
     int     bf_na;          
     float   bf_sigma_d;     
     float   bf_sigma_r;     
-	int     fdog_type;
+    int     fdog_type;
     int     fdog_n;
     float   fdog_sigma_e;     
     float   fdog_sigma_r;     
     float   fdog_sigma_m;
     float   fdog_tau;         
     float   fdog_phi;         
-	float	fdog_color[3];
+    float   fdog_eps;
+    float   fdog_color[3];
     int     cq_nbins;       
     float   cq_phi_q;       
     int     cq_filter;
@@ -69,5 +70,5 @@ public:
     float   fs_sigma;
 
 signals:
-	void playerChanged();
+    void playerChanged();
 };

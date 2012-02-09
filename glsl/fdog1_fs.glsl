@@ -3,6 +3,7 @@ uniform sampler2D img;
 uniform sampler2D tfm;
 uniform float sigma_m;
 uniform float phi;
+uniform float epsilon;
 uniform vec2 img_size;
 
 struct lic_t { 
@@ -54,7 +55,7 @@ void main (void) {
     }
     H /= w;
 
-    H -= 0.5;
+    H -= epsilon + 0.5;
     float edge = ( H > 0.0 )? 1.0 : 2.0 * smoothstep(-2.0, 2.0, phi * H );
     gl_FragColor = vec4(vec3(edge), 1.0);
 }
