@@ -1203,6 +1203,30 @@ p, li { white-space: pre-wrap; }
    </slots>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>glw</tabstop>
+  <tabstop>timeSlider</tabstop>
+  <tabstop>preview</tabstop>
+  <tabstop>sst_sigma</tabstop>
+  <tabstop>bf_ne</tabstop>
+  <tabstop>bf_na</tabstop>
+  <tabstop>bf_sigma_d</tabstop>
+  <tabstop>bf_sigma_r</tabstop>
+  <tabstop>fdog_type</tabstop>
+  <tabstop>fdog_n</tabstop>
+  <tabstop>fdog_sigma_e</tabstop>
+  <tabstop>fdog_sigma_r</tabstop>
+  <tabstop>fdog_sigma_m</tabstop>
+  <tabstop>fdog_tau</tabstop>
+  <tabstop>fdog_phi</tabstop>
+  <tabstop>fdog_eps</tabstop>
+  <tabstop>fdog_colorButton</tabstop>
+  <tabstop>cq_nbins</tabstop>
+  <tabstop>cq_phi_q</tabstop>
+  <tabstop>cq_filter</tabstop>
+  <tabstop>fs_type</tabstop>
+  <tabstop>fs_sigma</tabstop>
+ </tabstops>
  <resources>
   <include location="resources.qrc"/>
  </resources>
