@@ -1,4 +1,3 @@
-#extension GL_EXT_gpu_shader4 : enable
 // by Jan Eric Kyprianidis <www.kyprianidis.com>
 uniform sampler2D img;
 uniform vec2 img_size;
