@@ -21,7 +21,8 @@ void main (void) {
     vec3 sum = center;
     float norm = 1.0;
     float halfWidth = 2.0 * sigma_d;
-    for (float d = ds; d <= halfWidth; d += ds) {
+    for (int i = 0; i < halfWidth; ++i) {
+        float d = i * ds;
         vec3 c0 = texture2D(img, uv + d * dir).rgb;
         vec3 c1 = texture2D(img, uv - d * dir).rgb;
         float e0 = length(c0 - center);

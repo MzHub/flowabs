@@ -39,13 +39,13 @@ void main (void) {
     b.t = -a.t;
     a.w = b.w = 0.0;
 
-    while (a.w < halfWidth) {
+    for (int i = 0; i < halfWidth; ++i) {
         step(a);
         float k = a.dw * exp(-a.w * a.w / twoSigma2);
         c += k * texture2D(img, a.p).xyz;
         w += k;
     }
-    while (b.w < halfWidth) {
+    for (int i = 0; i < halfWidth; ++i) {
         step(b);
         float k = b.dw * exp(-b.w * b.w / twoSigma2);
         c += k * texture2D(img, b.p).xyz;
